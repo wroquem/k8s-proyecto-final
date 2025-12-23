@@ -5,7 +5,7 @@ echo ">>> Iniciando despliegue completo..."
 
 # 1. Configuración básica
 kubectl apply -f configmap.yml
-kubectl apply -f secret.yaml
+kubectl apply -f secret.yml
 
 # 2. Base de Datos con Persistencia
 kubectl apply -f mysql-pvc.yml
@@ -25,4 +25,5 @@ echo ">>> Esperando a que la Aplicación esté Ready..."
 kubectl rollout status deployment/python-rest-deployment
 
 echo ">>> DESPLIEGUE FINALIZADO EXITOSAMENTE"
+
 kubectl get ingress
