@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mi-app
+  template:
+    metadata:
+      labels:
+        app: mi-app
+    spec:
+      securityContext:
+        # Asegura que el pod no pueda escalar privilegios
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: mi-app-container
+        image: tu-usuario/mi-app:latest
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true # INMUTABILIDAD: No se puede escribir en el disco
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+          requests:
+            cpu: "200m"
+            memory: "128Mi"
+        # Si la app necesita escribir (logs/temp), usamos un volume temporal en RAM
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
