@@ -24,5 +24,4 @@ kubectl apply -f ingress.yml
 echo ">>> Esperando a que la Aplicación esté Ready..."
 kubectl rollout status deployment/python-rest-deployment
 
-echo ">>> DESPLIEGUE FINALIZADO EXITOSAMENTE"
-kubectl get ingress
+

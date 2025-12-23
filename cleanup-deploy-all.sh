@@ -6,8 +6,7 @@ set -e
 echo "--- Iniciando eliminacion de recursos de Kubernetes ---"
 
 # 1. Eliminar Ingress y HPA (Capa externa y escalado)
-echo "Eliminando Ingress y Horizontal Pod Autoscaler..."
-kubectl delete -f ingress.yml --ignore-not-found
+echo "Eliminando Horizontal Pod Autoscaler..."
 kubectl delete -f HorizontalPodAutoscal.yml --ignore-not-found
 
 # 2. Eliminar Servicios
