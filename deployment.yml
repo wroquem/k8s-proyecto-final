@@ -17,7 +17,8 @@ spec:
         runAsUser: 1000
       containers:
       - name: rest-api
-        image: python-rest-app:latest
+        image: wroquem/python-rest-app:latest
+        imagePullPolicy: Always
         securityContext:
           readOnlyRootFilesystem: true # INMUTABILIDAD
           allowPrivilegeEscalation: false

@@ -18,7 +18,8 @@ spec:
         fsGroup: 999
       containers:
       - name: mysql
-        image: mysql-custom:latest
+        image: wroquem/mysql-custom:latest
+        imagePullPolicy: Always
         securityContext:
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
