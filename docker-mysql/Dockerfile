@@ -8,5 +8,12 @@ ENV MYSQL_DATABASE=usuarios_db
 ENV MYSQL_USER=user_app
 ENV MYSQL_PASSWORD=PasswordSeguro123
 
-# Copy the initialization SQL script into the container's init directory
-COPY ./sql-scripts/init.sql /docker-entrypoint-initdb.d/
+# Copy initialization SQL scripts into the entrypoint directory
+# Any .sql or .sh files in this directory are run when the container starts for the first time
+COPY ./init-scripts/ /docker-entrypoint-initdb.d/
+
+# Expose the default MySQL port
+EXPOSE 3306
+
+# The container will run the default MySQL entrypoint command
+CMD ["mysqld"]
