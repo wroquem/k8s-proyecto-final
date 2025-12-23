@@ -20,9 +20,6 @@ spec:
       - name: mysql
         image: wroquem/mysql-custom:latest
         imagePullPolicy: Always
-        securityContext:
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom: { secretKeyRef: { name: app-secrets, key: MYSQL_ROOT_PASSWORD } }
