@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-rest-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-rest
+  template:
+    metadata:
+      labels:
+        app: python-rest
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: rest-api
+        image: python-rest-app:latest
+        securityContext:
+          readOnlyRootFilesystem: true # INMUTABILIDAD
+          allowPrivilegeEscalation: false
+        env:
+        - name: DB_HOST
+          valueFrom: { configMapKeyRef: { name: app-config, key: DB_HOST } }
+        - name: DB_PASSWORD
+          valueFrom: { secretKeyRef: { name: app-secrets, key: DB_PASSWORD } }
+        resources:
+          limits: { cpu: "500m", memory: "256Mi" }
+          requests: { cpu: "200m", memory: "128Mi" }
+        volumeMounts:
+        - name: tmp-vol
+          mountPath: /tmp
+      volumes:
+      - name: tmp-vol
+        emptyDir: {}
