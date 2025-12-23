@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: python-rest-service
 spec:
+  type: NodePort
   selector:
     app: python-rest
   ports:
